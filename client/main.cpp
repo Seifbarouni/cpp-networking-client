@@ -36,7 +36,7 @@ void main()
 	inet_pton(AF_INET, ipAddr.c_str(), &hint.sin_addr);
 
 	// Connect to server
-	int connResult = connect(sock, (sockaddr*)&int, sizeof(hint));
+	int connResult = connect(sock, (sockaddr*)&hint, sizeof(hint));
 	if (connResult == SOCKET_ERROR)
 	{
 		cerr << "Can't connect to server. Err #" << WSAGetLastError();
