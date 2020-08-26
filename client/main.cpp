@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void main()
+int main()
 {
 	string ipAddr = "127.0.0.1";
 	int port = 54000;
@@ -16,8 +16,8 @@ void main()
 	int wsResult = WSAStartup(ver, &data);
 	if (wsResult != 0)
 	{
-		cer << "Can't start winsock ,Err # " << wsResult;
-		return;
+		cerr << "Can't start winsock ,Err # " << wsResult;
+		return 1;
 	}
 
 	// Create a socket
@@ -25,14 +25,14 @@ void main()
 	if (sock == INVALID_SOCKET)
 	{
 		cerr << "Can't create socket. Err #" << WSAGetLastError();
-		return;
+		return 1;
 	}
 
 
 	// Fill in a hint structure
 	sockaddr_in hint;
 	hint.sin_family = AF_INET;
-	hint.sin_port = htons(ports);
+	hint.sin_port = htons(port);
 	inet_pton(AF_INET, ipAddr.c_str(), &hint.sin_addr);
 
 	// Connect to server
@@ -42,7 +42,7 @@ void main()
 		cerr << "Can't connect to server. Err #" << WSAGetLastError();
 		closesocket(sock);
 		WSACleanup();
-		return;
+		return 1;
 	}
 
 	
